@@ -2,7 +2,7 @@
 Tutorial how to start argocd
 
 
-# How to get password for argo UI
+# How to get password Argo UI
 
 Username: admin  
 You can check the password from this command:  
