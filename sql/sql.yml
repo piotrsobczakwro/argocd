@@ -1,66 +1,40 @@
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-  labels:
-    app: mysql-server
-spec:
-  ports:
-    - port: 3306
-  selector:
-    app: mysql-server
-    tier: mysql
-  clusterIP: None
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pv-claim
-  labels:
-    app: mysql-server
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
----
+# Create the SQL Server deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-server
-  labels:
-    app: mysql-server
+  name: mssql-deployment
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: mysql-server
-      tier: mysql
+      app: mssql
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mysql-server
-        tier: mysql
+        app: mssql
     spec:
-    containers:
-      - image: mysql:5.6
-        name: mysql
+      terminationGracePeriodSeconds: 10
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: mssql
+        image: mcr.microsoft.com/mssql/rhel/server:2019-latest
         env:
-        - name: MYSQL_ROOT_PASSWORD
+        - name: MSSQL_PID
+          value: "Developer"
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: MSSQL_SA_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-pass
-              key: password
-        ports:
-        - containerPort: 3306
-          name: mysql
+              name: mssql-secret
+              key: SA_PASSWORD 
         volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-    volumes:
-      - name: mysql-persistent-storage
+        - name: mssqldb
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: mssqldb
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: mssql-data
