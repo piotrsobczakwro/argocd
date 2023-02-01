@@ -14,7 +14,7 @@ spec:
       labels:
         app: nginx
     spec:
-    containers:
+      containers:
       - name: nginx
         image: nginx
         ports:
