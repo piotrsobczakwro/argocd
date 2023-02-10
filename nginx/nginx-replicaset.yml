@@ -11,12 +11,12 @@ spec:
       - {key: tier, operator: In,values: [frontend]}
   template:
     metadata:
-    name: nginx-pod
-    labels:
-      app: nginx-app
-      tier: frontend
-    spec:
-      containers:
+      name: nginx-pod
+      labels:
+        app: nginx-app
+        tier: frontend
+      spec:
+        containers:
         - name: nginx-container
           image: nginx
           ports:
