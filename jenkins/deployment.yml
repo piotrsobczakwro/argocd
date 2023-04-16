@@ -22,9 +22,9 @@ spec:
           image: jenkins/jenkins:lts
           env:
             - name: JENKINS_ADMIN_ID
-              value: admin
+              value: "admin"
             - name: JENKINS_ADMIN_PASSWORD
-              value: "bolo1234"
+              value: "admin"
           resources:
             limits:
               memory: "1Gi"
