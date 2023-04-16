@@ -22,7 +22,7 @@ spec:
           image: jenkins/jenkins:lts
           env:
             - name: JENKINS_ADMIN_ID
-              value: "admin"
+              value: "sh0"
             - name: JENKINS_ADMIN_PASSWORD
               value: "admin"
           resources:
