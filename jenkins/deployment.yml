@@ -20,9 +20,14 @@ spec:
       containers:
         - name: jenkins
           image: jenkins/jenkins:lts
+          env:
+            - name: JENKINS_ADMIN_ID
+              value: admin
+            - name: JENKINS_ADMIN_PASSWORD
+              value: "bolo1234"
           resources:
             limits:
-              memory: "2Gi"
+              memory: "1Gi"
               cpu: "1000m"
             requests:
               memory: "500Mi"
